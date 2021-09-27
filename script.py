@@ -43,8 +43,8 @@ while(True):
         exitProgram()
     if opt == 2:
         print("Typed 2.")
+        exitProgram()
     if opt == 3:
-        quit()
         exitProgram()
     if (opt==1 or opt==2 or opt==3) is False:
         print("Please introduce a valid input.")
