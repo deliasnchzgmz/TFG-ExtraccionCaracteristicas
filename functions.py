@@ -8,8 +8,10 @@ charact = ["image","name", "duration", "scale"]
 data = [image, name]
 
 def databaseFeatures(db):
-    folder = natsort.natsorted(os.listdir(db))          #r
-    valid_images = [".jpg",".gif",".png",".tga"]
+
+    folder = natsort.natsorted(os.listdir(db))  
+    print(folder)        #r
+    valid_images = [".jpg",".gif",".png",".tga",".jpeg"]
     for f in folder:
         ext = os.path.splitext(f)[1]
         if ext.lower() not in valid_images:
@@ -19,13 +21,14 @@ def databaseFeatures(db):
     return image, name
 
 
+
 def initWorksheet(wbname):
     workbook = xlsxwriter.Workbook(wbname+'.xlsx')
     worksheet = workbook.add_worksheet("mainsheet")
     
     worksheet.write('B'+str(1), charact[1])
-    worksheet.write('D'+str(1), charact[2])
-    worksheet.write('E'+str(1), charact[3])
+    worksheet.write('C'+str(1), charact[2])
+    worksheet.write('D'+str(1), charact[3])
 
     workbook.close()
     return workbook

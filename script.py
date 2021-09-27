@@ -21,27 +21,37 @@ def program():
     print("Saved data.")
     n=5
     
-
 def error():
     print("There has been an error.")
     print("Exiting the program...")
 
-
+def exitProgram():
+    value = input("Do you want to exit? [Y/N]")
+    while( (value=="y" or value=="Y" or value=="n" or value=="N") is False):
+        print()
+        value = input("Please type Y or N:")
+    if (value=="Y" or value=="y"):
+        quit()
 
 print("What do you want to do?")
-opt = int(input())
+while(True):
+    print("Type 1 to run the program.\nType 2 to add another image to data.\nType 3 to exit the program.")
+    opt = int(input())
+    if opt == 1:
+        print("Executing program...")
+        program()
+        exitProgram()
+    if opt == 2:
+        print("Typed 2.")
+    if opt == 3:
+        quit()
+        exitProgram()
+    if (opt==1 or opt==2 or opt==3) is False:
+        print("Please introduce a valid input.")
 
-switch = {
-    1 : program(),
-    2 : quit()
-}
 
-while(n>0):
-    switch.get(opt,error)
-    continue
+##
 
-
-#C:\Users\dl2pa\OneDrive\Imágenes\flechas.png
 
 
 
