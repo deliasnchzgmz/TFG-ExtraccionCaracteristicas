@@ -8,9 +8,7 @@ charact = ["image","name", "duration", "scale"]
 data = [image, name]
 
 def databaseFeatures(db):
-
     folder = natsort.natsorted(os.listdir(db))  
-    print(folder)        #r
     valid_images = [".jpg",".gif",".png",".tga",".jpeg"]
     for f in folder:
         ext = os.path.splitext(f)[1]
