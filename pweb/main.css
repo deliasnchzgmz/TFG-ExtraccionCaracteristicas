@@ -1,0 +1,31 @@
+body{
+    background-color: lightcyan;
+    margin: 0;
+}
+header{
+    margin: 0;
+}
+#navbar{
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    margin: 0;
+    width: 100%;
+    padding: 0px;
+    color:white;
+    background-color: black;
+}
+.menu{
+    background-color: black;
+    margin:0;
+    flex-grow: 5;
+    flex-basis: 10%;
+    padding: 15px;
+}
+.menu:hover{
+    color: black;
+    background-color: white;
+}
+.title{
+    text-align: center;
+}
