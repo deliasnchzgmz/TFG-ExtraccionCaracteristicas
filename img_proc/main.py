@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from skimage import io
-from skimage.morphology import binary_dilation, binary_erosion
+from skimage.morphology import binary_dilation
 
 
 
@@ -43,7 +43,7 @@ for i in range(len(test)):
 # saco la imagen sin pentagramas y la imagen con pentagramas
           
 for x in range(len(counter)):
-    if (counter[x]/len(blank[x])>0.4):
+    if (counter[x]/len(blank[x])>0.3):
         line_pos.append(x)
         for b in range(len(test[x])):
             if bin_img[x][b] == 0:
@@ -77,12 +77,9 @@ cv2.imwrite('sinpart.png',test)
 #esto se llamaba: CIERRE
 
 kernel1 = np.array([[1],[1],[1]])
-kernel2 = np.array([[0,0,1], [0,1,0],[1,0,0]])
-closing = binary_dilation(cv2.bitwise_not(test), kernel1).astype(np.uint8)*255
-closing = cv2.bitwise_not(closing)
-closing = binary_erosion(cv2.bitwise_not(test), kernel2).astype(np.uint8)*255
-closing = cv2.bitwise_not(closing)
+dilation = binary_dilation(cv2.bitwise_not(test), kernel1).astype(np.uint8)*255
+dilation = cv2.bitwise_not(dilation)
 
-cv2.imwrite('closing.png',closing)
-plt.imshow(closing, 'gray')
+cv2.imwrite('closing.png',dilation)
+plt.imshow(dilation, 'gray')
 plt.show()

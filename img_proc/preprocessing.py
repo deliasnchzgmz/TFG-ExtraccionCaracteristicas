@@ -2,9 +2,11 @@ import os, math
 import cv2
 import numpy as np
 from skimage.morphology import binary_dilation
+from skimage.filters import threshold_otsu, threshold_niblack, threshold_sauvola
 
 ##En este script se pretende aplicar los procesados de imagen necesarios para
 #implementar posteriormente los algoritmos de extracción de información a la imagen
+
 
 
 def lines_location (image):
@@ -32,6 +34,7 @@ def lines_location (image):
                     no_lines[i1][j1] = 255
                     blank[i1][j1] = 0
 
+    #blank = lines_proc(blank)
 
     '''# saco donde empiezan las lineas
     for i in range(len(line_pos)):
@@ -39,6 +42,7 @@ def lines_location (image):
             if blank[line_pos[i][j]]==0:
                 line_pos_init.append(p)
                 break
+    # media de inicio de las líneas
     mean_lines_init = sum(line_pos_init)/len(line_pos_init)'''
 
     return blank, no_lines, line_pos
@@ -51,7 +55,12 @@ def no_lines_proc(no_lines):
     
     return dilation
 
+def lines_proc(blank):
+    kernel2 = np.array([1, 1, 1, 1, 1, 1, 1, 1])
+    blank = binary_dilation(cv2.bitwise_not(blank), kernel2).astype(np.uint8)*255
+    blank = cv2.bitwise_not(blank)
 
+    return blank
 
 
 
