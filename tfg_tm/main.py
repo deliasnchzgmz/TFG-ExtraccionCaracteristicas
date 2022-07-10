@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
-import utils
+import utils, midi
 
-mscore_img = cv2.imread('resources/sheets/nose-1.png', cv2.IMREAD_UNCHANGED)
+mscore_img = cv2.imread('resources/sheets/p-2.png', cv2.IMREAD_UNCHANGED)
 
 crotchet_temp = cv2.imread('resources/templates/crotchet_temp.png', cv2.IMREAD_UNCHANGED)
 g_clef_temp = cv2.imread('resources/templates/g_clef.png', cv2.IMREAD_UNCHANGED)
@@ -30,14 +30,10 @@ line_pos = utils.lines_location(bin_img, counter)
 staff_lines= utils.staffs(line_pos)
 nolines_img = utils.detect_ei(bin_img, staff_lines)
 
-cv2.imshow('output', nolines_img)
-cv2.waitKey(0) 
-cv2.destroyAllWindows() 
-
 
 crotchet_list, crotchet_out = utils.get_rectangles_figures(mscore_img, crotchet_temp, staff_lines, 0.7)
 minim_list, minim_out = utils.get_rectangles_figures(mscore_img, minim_temp, staff_lines, 0.7)
-clef_list, clef_out = utils.get_rectangles_clef(mscore_img, g_clef_temp, 'G CLEF')
+clef_list, clef_out = utils.get_rectangles_clef(mscore_img, g_clef_temp, 'CLAVE DE SOL')
 c_list, c_out = utils.get_rectangles_clef(mscore_img, c_temp, '4/4 TS')
 crotchetR_list, crotchetR_out = utils.get_rectangles_clef(mscore_img, crotchetR_temp, 'CROTCHET REST')
 minimR_list, minimR_out = utils.get_rectangles_figures(mscore_img, minimR_temp, staff_lines, 0.9)
@@ -46,6 +42,8 @@ quaverR_list, quaverR_out = utils.get_rectangles_clef(mscore_img, quaverR_temp, 
 crotchet_list, crotchet_out, quaver_list, quaver_out = utils.detect_quaver(crotchet_list, crotchet_out, quaver_stem, nolines_img)
 l = utils.order_lists(clef_list, clef_out, c_list, c_out, crotchet_list, crotchet_out, minim_list, minim_out, quaver_list, quaver_out, crotchetR_list, minimR_list, minimR_out, quaverR_list, quaverR_out)
 utils.draw_rectangles(mscore_img, l)
+
+midi.write_midi(l, 'resources/out/demofile3.abc', 'resources/out/output.mid')
 
 
 cv2.imwrite('resources/out/output.png', mscore_img) 

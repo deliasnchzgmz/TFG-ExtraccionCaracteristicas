@@ -1,21 +1,22 @@
-#!/usr/bin/env python
+from music21 import *
 
-from midiutil import MIDIFile
+'''f5 = note.Note("F5")
+f = note.Note("F5")
+c4 = note.Note("C4")
+stream = stream.Stream()
+stream.append(f5)
+stream.append(c4)
+stream.append(f)
 
-degrees  = [60, 62, 64, 65, 67, 69, 71, 72]  # MIDI note number
-track    = 0
-channel  = 0
-time     = 0    # In beats
-duration = 0.5    # In beats
-tempo    = 60   # In BPM
-volume   = 100  # 0-127, as per the MIDI standard
+stream.show('midi')
+stream.write('midi', fp='resources/out/output.mid')'''
 
-MyMIDI = MIDIFile(1)  # One track, defaults to format 1 (tempo track is created
-                      # automatically)
-MyMIDI.addTempo(track, time, tempo)
+f = open("resources/out/demofile3.abc", "w")
+f.write("X:1\nT:Tusa\nL:1/4\nQ: 1/4=170\nR:jig\nK:C\n")
+f.write("d B A G z G/2 z/2  d B A G z G/2 z/2 c4")
+f.close()
 
-for i, pitch in enumerate(degrees):
-    MyMIDI.addNote(track, channel, pitch, time + i, duration, volume)
+abcScore = converter.parse('resources/out//demofile3.abc')
 
-with open("major-scale.mid", "wb") as output_file:
-    MyMIDI.writeFile(output_file)
+abcScore.show('midi')
+abcScore.write('midi', fp='resources/out/output.mid')

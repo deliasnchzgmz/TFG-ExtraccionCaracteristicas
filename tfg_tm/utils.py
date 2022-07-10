@@ -84,17 +84,17 @@ def find_nearest(array, value):
 
 def find_note(single_staff, rectY):
     notes = {
-      10 : 'DO',
-      9 : 'RE',
-      8 : 'MI',
-      7 : 'FA',
-      6 : 'SOL',
-      5 : 'LA',
-      4 : 'SI',
-      3 : 'DO*',
-      2 : 'RE*',
-      1 : 'MI*',
-      0: 'FA*'
+      10 : 'C',
+      9 : 'D',
+      8 : 'E',
+      7 : 'F',
+      6 : 'G',
+      5 : 'A',
+      4 : 'B',
+      3 : 'c',
+      2 : 'd',
+      1 : 'e',
+      0: 'f'
   }
     rect_note = notes[find_nearest(single_staff, rectY)]
 
@@ -189,19 +189,19 @@ def order_lists(clef, clef_out, c, c_out, crotchet, crotchet_out, minim, minim_o
     for i in range(len(c)):
         full_list.append([c[i], c_out[i]])
     for i in range(len(crotchet)):
-        full_list.append([crotchet[i], 'crotchet', crotchet_out[i]])
+        full_list.append([crotchet[i], '', crotchet_out[i]])
     for i in range(len(minim)):
-        full_list.append([minim[i], 'minim', minim_out[i]])
+        full_list.append([minim[i], '2', minim_out[i]])
     for i in range(len(crotchetR)):
-        full_list.append([crotchetR[i], 'crotchet rest'])
+        full_list.append([crotchetR[i], 'z'])
     for i in range(len(quaver)):
-        full_list.append([quaver[i], 'quaver', quaver_out[i]])
+        full_list.append([quaver[i], '/2', quaver_out[i]])
     for i in range(len(quaverR)):
-        full_list.append([quaverR[i], 'quaver rest'])
+        full_list.append([quaverR[i], 'z/2'])
     for i in range(len(minimR)):
         if minimR_out[i] == 'SI':
-            full_list.append([minimR[i], 'minim rest'])
-        else: full_list.append([minimR[i], 'semibreve rest'])
+            full_list.append([minimR[i], 'z2'])
+        else: full_list.append([minimR[i], 'z4'])
     
     full_list.sort(key=sortX)
     return full_list
