@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from PIL import *
 
 def image_preprocessing(image, threshold): # binariza la imagen y prepara para extraer las lineas y las figuras
     image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -200,8 +201,8 @@ def order_lists(clef, clef_out, c, c_out, crotchet, crotchet_out, minim, minim_o
         full_list.append([quaverR[i], 'z/2'])
     for i in range(len(minimR)):
         if minimR_out[i] == 'SI':
-            full_list.append([minimR[i], 'z2'])
-        else: full_list.append([minimR[i], 'z4'])
+            full_list.append([minimR[i], 'z4'])
+        else: full_list.append([minimR[i], 'z2'])
     
     full_list.sort(key=sortX)
     return full_list
@@ -241,22 +242,14 @@ def detect_quaver(crotchet, crotchet_out, quaver_stem, nolines_img):
     return crotchet, crotchet_out, quaver_list[::-1], quaver_out[::-1]
 
             
-def crop(staff_lines, mscore_img):
-    
-    cropped_img = []
-    if len(staff_lines)>1:
-        cut = [0]
-        for i in reversed(range(1,len(staff_lines))):
-            cut.append(round((staff_lines[i-1][10]+staff_lines[i][10])/2))
-        cut.append(mscore_img.shape[0])
-        for i in range(len(cut)-1):
-            cropped_img.append(mscore_img[cut[i]:cut[i+1]][:][:]) ## lista de imagenes
-    else: cropped_img.append(mscore_img)
-    
-    return cropped_img
+def concatenate(cropped_img):
+    if len(cropped_img)<2: 
+        return cropped_img[0]
+    else: 
+        return cv2.vconcat([cv2.hconcat(cropped_img) for list_h in cropped_img])
 
-    
-    
-    
-    
-    
+def cv_to_pil(image):
+    blue,green,red = cv2.split(image)
+    image = cv2.merge((red,green,blue))
+    im = Image.fromarray(image)
+    return im

@@ -3,7 +3,7 @@ from music21 import *
 def write_midi(l, file, output):
     
     f = open(file, "w")
-    f.write("X:1\nT:Tusa\nL:1/4\nQ: 1/4=150\nR:jig\nK:C\n")
+    f.write("X:1\nT:Tusa\nL:1/4\nQ: 1/4=100\nR:jig\nK:C\n")
     
     for el in l:
         if "CLAVE" in el[1] or "TS" in el[1]:

@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import utils, midi
 
-mscore_img = cv2.imread('resources/sheets/p-2.png', cv2.IMREAD_UNCHANGED)
+mscore_img = cv2.imread('resources/sheets/tusa3.png', cv2.IMREAD_UNCHANGED)
 
 crotchet_temp = cv2.imread('resources/templates/crotchet_temp.png', cv2.IMREAD_UNCHANGED)
 g_clef_temp = cv2.imread('resources/templates/g_clef.png', cv2.IMREAD_UNCHANGED)
@@ -30,25 +30,43 @@ line_pos = utils.lines_location(bin_img, counter)
 staff_lines= utils.staffs(line_pos)
 nolines_img = utils.detect_ei(bin_img, staff_lines)
 
+l = []
+cropped_img = []
+cuts = [0]
 
-crotchet_list, crotchet_out = utils.get_rectangles_figures(mscore_img, crotchet_temp, staff_lines, 0.7)
-minim_list, minim_out = utils.get_rectangles_figures(mscore_img, minim_temp, staff_lines, 0.7)
-clef_list, clef_out = utils.get_rectangles_clef(mscore_img, g_clef_temp, 'CLAVE DE SOL')
-c_list, c_out = utils.get_rectangles_clef(mscore_img, c_temp, '4/4 TS')
-crotchetR_list, crotchetR_out = utils.get_rectangles_clef(mscore_img, crotchetR_temp, 'CROTCHET REST')
-minimR_list, minimR_out = utils.get_rectangles_figures(mscore_img, minimR_temp, staff_lines, 0.9)
-quaver_stem, _ = utils.get_rectangles_clef(mscore_img, stem_temp, 'stem')
-quaverR_list, quaverR_out = utils.get_rectangles_clef(mscore_img, quaverR_temp, 'QUAVER REST')
-crotchet_list, crotchet_out, quaver_list, quaver_out = utils.detect_quaver(crotchet_list, crotchet_out, quaver_stem, nolines_img)
-l = utils.order_lists(clef_list, clef_out, c_list, c_out, crotchet_list, crotchet_out, minim_list, minim_out, quaver_list, quaver_out, crotchetR_list, minimR_list, minimR_out, quaverR_list, quaverR_out)
-utils.draw_rectangles(mscore_img, l)
+for staff in range(len(staff_lines)-1):
+    cuts.append(round((staff_lines[staff][10]+staff_lines[staff+1][10])/2))
+cuts.append(mscore_img.shape[0])
+for border in range(len(cuts)-1):
+    cropped_img.append(mscore_img[cuts[border]:cuts[border+1]])
 
-midi.write_midi(l, 'resources/out/demofile3.abc', 'resources/out/output.mid')
+for image in range(len(cropped_img)):
+    counter = np.zeros(cropped_img[image].shape[0]-1)
+    image_gray, bin_img  = utils.image_preprocessing(cropped_img[image], threshold = 200) # imagen binaria
+    line_pos = utils.lines_location(bin_img, counter)
+    staff_lines= utils.staffs(line_pos)
+    nolines_img = utils.detect_ei(bin_img, staff_lines)
+    
+    crotchet_list, crotchet_out = utils.get_rectangles_figures(cropped_img[image], crotchet_temp, staff_lines, 0.7)
+    minim_list, minim_out = utils.get_rectangles_figures(cropped_img[image], minim_temp, staff_lines, 0.7)
+    clef_list, clef_out = utils.get_rectangles_clef(cropped_img[image], g_clef_temp, 'CLAVE DE SOL')
+    c_list, c_out = utils.get_rectangles_clef(cropped_img[image], c_temp, '4/4 TS')
+    crotchetR_list, crotchetR_out = utils.get_rectangles_clef(cropped_img[image], crotchetR_temp, 'CROTCHET REST')
+    minimR_list, minimR_out = utils.get_rectangles_figures(cropped_img[image], minimR_temp, staff_lines, 0.9)
+    quaver_stem, _ = utils.get_rectangles_clef(cropped_img[image], stem_temp, 'stem')
+    quaverR_list, quaverR_out = utils.get_rectangles_clef(cropped_img[image], quaverR_temp, 'QUAVER REST')
+    crotchet_list, crotchet_out, quaver_list, quaver_out = utils.detect_quaver(crotchet_list, crotchet_out, quaver_stem, nolines_img)
+    ordered_list = utils.order_lists(clef_list, clef_out, c_list, c_out, crotchet_list, crotchet_out, minim_list, minim_out, quaver_list, quaver_out, crotchetR_list, minimR_list, minimR_out, quaverR_list, quaverR_out)
+    l.append(ordered_list)
+    utils.draw_rectangles(cropped_img[image], ordered_list)
+    
+l = [l for sub in l for l in sub]
 
+final_img = cv2.vconcat(cropped_img)
 
-cv2.imwrite('resources/out/output.png', mscore_img) 
-#midi.generateMIDI(l)
-cv2.imshow('output', mscore_img)
+cv2.imwrite('resources/out/output.png', final_img) 
+midi.write_midi(l, 'resources/out/demofile.abc', 'resources/out/demofile.mid')
+cv2.imshow('output', final_img)
 cv2.waitKey(0) 
 cv2.destroyAllWindows() 
 
