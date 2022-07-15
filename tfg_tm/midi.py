@@ -17,5 +17,6 @@ def write_midi(l, file, output):
     f.close()
     abcScore = converter.parse(file)
 
-    abcScore.show('midi')
+    #bcScore.show('midi')
     abcScore.write('midi', fp = output)
+

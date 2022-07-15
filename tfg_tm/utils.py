@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from PIL import *
+from PIL import Image
 
 def image_preprocessing(image, threshold): # binariza la imagen y prepara para extraer las lineas y las figuras
     image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
