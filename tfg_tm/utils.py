@@ -235,9 +235,9 @@ def detect_quaver(crotchet, crotchet_out, quaver_stem, nolines_img):
         for element in delete:
             if element not in ndelete:
                 ndelete.append(element)
-        for d in reversed(range(len(ndelete))):
-            quaver_list.append(crotchet.pop(d))
-            quaver_out.append(crotchet_out.pop(d))
+        for d in (range(len(ndelete))):
+            quaver_list.append(crotchet.pop(ndelete[d]))
+            quaver_out.append(crotchet_out.pop(ndelete[d]))
 
     return crotchet, crotchet_out, quaver_list[::-1], quaver_out[::-1]
 
