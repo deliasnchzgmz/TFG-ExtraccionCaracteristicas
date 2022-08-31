@@ -1,28 +1,17 @@
 Clave de Sol (en segunda línea)
-Tonalidad: FA MAYOR
+Tonalidad: DO MAYOR
 Lista de figuras: 
-	DO corchea
-	DO corchea
-	RE negra
-	DO negra
-	FA negra
-	MI blanca
-	DO corchea
-	DO corchea
-	RE negra
-	DO negra
-	SOL negra
-	FA blanca
-	DO corchea
-	DO corchea
-	DO* negra
-	LA negra
-	FA negra
-	MI negra
-	RE negra
+	RE* corchea
 	SI corchea
+	LA corchea
+	SOL corchea
+	silencio de negra
+	SOL corchea
+	silencio de corchea
+	RE* corchea
 	SI corchea
-	LA negra
-	FA negra
-	SOL negra
-	FA blanca
+	LA corchea
+	SOL corchea
+	silencio de negra
+	SOL corchea
+	silencio de corchea
