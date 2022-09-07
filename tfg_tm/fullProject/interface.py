@@ -2,12 +2,11 @@ from tkinter import *
 from tkinter import ttk, filedialog
 from PIL import Image, ImageTk
 import utils, analysis, os, natsort, cv2, pygame
-
 root = Tk()
 root.title("TFG-EXTRACCIÓN DE LA INFORMACIÓN MUSICAL PRESENTE EN PARTITURAS EN FORMATO IMAGEN")
 root.iconbitmap('resources\logo_uc3m.ico')
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
-root.geometry("%dx%d+0+0" % (w, h))
+root.geometry("%dx%d+0+0" % (w-100, h-200))
 
 db = 'resources/sheets'
 imList = []
@@ -22,7 +21,7 @@ status = Label(root, text="Imagen 1 de "+ str(len(imList)), bd=1, relief=SUNKEN,
 
 image_number = 0
 label = Label(root, image=imList[image_number])
-label.grid(row=0, column=0, columnspan=3, padx=w/5, pady=5, sticky=NS)
+label.grid(row=0, column=0, columnspan=3, sticky=NS)
 
 def forward(image_number, imList):
     global label
@@ -138,9 +137,9 @@ button_back = Button(root, text="<<", command=lambda: back(image_number-1, imLis
 button_analyze = Button(root, text="Analizar", command = lambda: analizar(image_number), padx=200, pady=10)
 button_forward = Button(root, text=">>", command=lambda: forward(image_number+1, imList), padx=200, pady=10)
 
-button_back.grid(row=2, column=0, padx= 100, pady=20)
-button_analyze.grid(row=2, column=1, padx= 100, pady=20)
-button_forward.grid(row=2, column=2, padx= 100, pady=20)
+button_back.grid(row=2, column=0, padx= w/25, pady=20, sticky=NS)
+button_analyze.grid(row=2, column=1, padx= w/25, pady=20, sticky=NS)
+button_forward.grid(row=2, column=2, padx= w/25, pady=20, sticky=NS)
 status.grid(row=1, column=0, columnspan=3, pady=20, sticky=W+E)
 
 

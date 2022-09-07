@@ -15,3 +15,38 @@ Lista de figuras:
 	silencio de negra
 	SOL corchea
 	silencio de corchea
+	SOL corchea
+	LA corchea
+	SI corchea
+	RE* corchea
+	silencio de negra
+	RE* corchea
+	silencio de corchea
+	RE* corchea
+	SI corchea
+	LA corchea
+	SI corchea
+	silencio de blanca
+	silencio de negra
+	DO* corchea
+	SI corchea
+	DO* corchea
+	SI corchea
+	DO* corchea
+	SI corchea
+	silencio de corchea
+	SOL corchea
+	SOL corchea
+	LA corchea
+	SI corchea
+	LA corchea
+	SI corchea
+	LA corchea
+	silencio de corchea
+	SOL corchea
+	SOL corchea
+	LA corchea
+	SI corchea
+	LA corchea
+	SI corchea
+	LA corchea
